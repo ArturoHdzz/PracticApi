@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class MetodoPago extends Model
 {
     use HasFactory;
+    protected $fillable = ['nombre', 'descripcion', 'tipo'];
+    protected $table = 'metodo_pagos';
+
+    public function compras()
+    {
+        return $this->hasMany(Compra::class);
+    }
+
 }

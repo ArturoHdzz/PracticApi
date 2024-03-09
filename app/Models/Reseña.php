@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Reseña extends Model
 {
     use HasFactory;
+    protected $fillable = ['comentario', 'calificacion', 'fecha' ,'modelo_id', 'user_id'];
 }
