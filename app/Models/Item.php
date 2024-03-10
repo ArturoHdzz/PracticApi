@@ -18,6 +18,6 @@ class Item extends Model
 
     public function modelo()
     {
-        return $this->belongsTo(Modelo::class);
+        return $this->HasMany(Modelo::class);
     }
 }

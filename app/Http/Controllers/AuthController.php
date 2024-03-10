@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\Correo;
 use App\Models\User;
+use App\Mail\VerificationCodeMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 
@@ -18,7 +20,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'activate']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'activate', 'verify']]);
     }
 
     /**
@@ -30,11 +32,42 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
+        $user = User::where('email', $credentials['email'])->first();
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            
+            $code = rand(100000, 999999);
+            
+            $encrypted_code = encrypt($code);
+
+            $user->verification_code = $encrypted_code;
+            $user->save();
+
+            Mail::to($user->email)->send(new VerificationCodeMail($code));
+
+            return response()->json(['message' => 'Login successful, please verify.']);
+        } else {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+    }
 
-        return $this->respondWithToken($token);
+    public function verify()
+    {
+        $credentials = request(['verification_code']);
+
+        $user = User::whereNotNull('verification_code')->get()->filter(function ($user) use ($credentials) {
+            return decrypt($user->verification_code) == $credentials['verification_code'];
+        })->first();
+
+        if ($user) {
+            $user->verification_code = null;
+            $user->save();
+
+            $token = auth()->login($user);
+
+            return $this->respondWithToken($token);
+        } else {
+            return response()->json(['error' => 'Invalid verification code'], 401);
+        }
     }
 
     /**
@@ -105,12 +138,15 @@ class AuthController extends Controller
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->save();
+
             $signedroute = URL::temporarySignedRoute(
                 'activate',
                 now()->addMinutes(10),
                 ['user' => $user->id]
             );
+
             Mail::to($request->email)->send(new Correo($signedroute));
+
             return response()->json(["msg"=>"Se mando un mensaje a tu correo","data"=>$user],201);
     }
 

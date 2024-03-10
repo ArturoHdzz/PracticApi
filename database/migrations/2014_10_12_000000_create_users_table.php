@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->string('verification_code')->nullable();
             $table->boolean('is_active')->default(false);
             $table->unsignedBigInteger('role_id')->default(3);
             $table->foreign('role_id')->references('id')->on('roles');
