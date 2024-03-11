@@ -7,6 +7,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\ModeloController;
+use App\Http\Controllers\MetodoPagoController;
+use App\Http\Controllers\CompraController;
+use App\Http\Controllers\DetalleCompraController;
+use App\Http\Controllers\ReseñaController;
+use App\Http\Controllers\FavoritoController;
+use App\Http\Controllers\DetallePedidoController;
+use App\Http\Controllers\PedidoController;
 
 Route::group([
     'middleware' => 'api',
@@ -48,6 +55,49 @@ Route::group([
     Route::post('modelo', [ModeloController::class, 'store']);
     Route::put('modelo/{id}', [ModeloController::class, 'update'])->where('id', '[0-9]+');
     Route::delete('modelo/{id}', [ModeloController::class, 'destroy'])->where('id', '[0-9]+');
+
+    Route::get('metodopago', [MetodoPagoController::class, 'index']);
+    Route::get('metodopago/{id}', [MetodoPagoController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('metodopago', [MetodoPagoController::class, 'store']);
+    Route::put('metodopago/{id}', [MetodoPagoController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('metodopago/{id}', [MetodoPagoController::class, 'destroy'])->where('id', '[0-9]+');
+    
+    Route::get('compra', [CompraController::class, 'index']);
+    Route::get('compra/{id}', [CompraController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('compra', [CompraController::class, 'store']);
+    Route::put('compra/{id}', [CompraController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('compra/{id}', [CompraController::class, 'destroy'])->where('id', '[0-9]+');
+
+    Route::get('detallecompra', [DetalleCompraController::class, 'index']);
+    Route::get('detallecompra/{id}', [DetalleCompraController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('detallecompra', [DetalleCompraController::class, 'store']);
+    Route::put('detallecompra/{id}', [DetalleCompraController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('detallecompra/{id}', [DetalleCompraController::class, 'destroy'])->where('id', '[0-9]+');
+    
+    Route::get('reseña', [ReseñaController::class, 'index']);
+    Route::get('reseña/{id}', [ReseñaController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('reseña', [ReseñaController::class, 'store']);
+    Route::put('reseña/{id}', [ReseñaController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('reseña/{id}', [ReseñaController::class, 'destroy'])->where('id', '[0-9]+');
+
+    Route::get('favorito', [FavoritoController::class, 'index']);
+    Route::get('favorito/{id}', [FavoritoController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('favorito', [FavoritoController::class, 'store']);
+    Route::put('favorito/{id}', [FavoritoController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('favorito/{id}', [FavoritoController::class, 'destroy'])->where('id', '[0-9]+');
+
+    Route::get('detallepedido', [DetallePedidoController::class, 'index']);
+    Route::get('detallepedido/{id}', [DetallePedidoController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('detallepedido', [DetallePedidoController::class, 'store']);
+    Route::put('detallepedido/{id}', [DetallePedidoController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('detallepedido/{id}', [DetallePedidoController::class, 'destroy'])->where('id', '[0-9]+');
+
+    Route::get('pedido', [PedidoController::class, 'index']);
+    Route::get('pedido/{id}', [PedidoController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('pedido', [PedidoController::class, 'store']);
+    Route::put('pedido/{id}', [PedidoController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('pedido/{id}', [PedidoController::class, 'destroy'])->where('id', '[0-9]+');
+
     
 });
 

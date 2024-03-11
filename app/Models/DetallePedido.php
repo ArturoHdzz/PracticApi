@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DetallePedido extends Model
 {
     use HasFactory;
-    protected $fillable = ['cantidad', 'precio', 'subtotal','pedido_id', 'modelo_id'];
+    protected $fillable = ['cantidad', 'precio', 'modelo_id'];
     protected $table = 'detalle_pedidos';
 
     public function pedido()
