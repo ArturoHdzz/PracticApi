@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('modelo_id')->constrained('modelos')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('comentario');
+            $table->string('comentario')->nullable();
             $table->integer('calificacion');
             $table->date('fecha');
             $table->timestamps();

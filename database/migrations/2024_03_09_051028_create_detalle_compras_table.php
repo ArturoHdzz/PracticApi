@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreignId('modelo_id')->constrained('modelos')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('cantidad');
             $table->float('precio');
-            $table->float('subtotal');
             $table->timestamps();
         });
     }
