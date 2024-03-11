@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('detalle_compras', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('compra_id')->constrained('compras')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('compra_id')->constrained('compras')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->foreignId('modelo_id')->constrained('modelos')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('cantidad');
             $table->float('precio');

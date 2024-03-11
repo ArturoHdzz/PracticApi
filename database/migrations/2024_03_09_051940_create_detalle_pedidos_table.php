@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('detalle_pedidos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->foreignId('modelo_id')->constrained('modelos')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('cantidad');
             $table->float('precio');

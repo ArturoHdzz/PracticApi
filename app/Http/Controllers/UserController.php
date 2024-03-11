@@ -12,13 +12,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with('rol')->get();
+        $users = User::with('role')->get();
         return response()->json($users);
     }
 
     public function show($id)
     {
-        $user = User::with('rol')->find($id);
+        $user = User::with('role')->find($id);
         return response()->json($user);
     }
 
@@ -28,7 +28,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
-            'rol_id' => 'required|exists:roles,id',
+            'role_id' => 'required|exists:roles,id',
         ]);
 
         if ($validator->fails()) {
@@ -39,10 +39,10 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->rol_id = $request->rol_id;
+        $user->role_id = $request->role_id;
         $user->save();
 
-        $user->load('rol'); 
+        $user->load('role');
 
         return response()->json($user);
     }
@@ -53,7 +53,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'required|min:6',
-            'rol_id' => 'required|exists:roles,id',
+            'role_id' => 'required|exists:roles,id',
             'is_active' => 'nullable|boolean'
         ]);
 
@@ -65,11 +65,11 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->rol_id = $request->rol_id;
+        $user->role_id = $request->role_id;
         $user->is_active = $request->is_active;
         $user->save();
 
-        $user->load('rol');
+        $user->load('role');
 
         return response()->json($user);
     }

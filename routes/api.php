@@ -6,25 +6,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CatalogoController;
+use App\Http\Controllers\ModeloController;
 
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 Route::group([
-
     'middleware' => 'api',
     'prefix' => 'auth'
-
 ], function ($router) {
-
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
@@ -32,28 +19,35 @@ Route::group([
     Route::post('register', [AuthController::class, 'register']);
     Route::get('activate/{user}', [AuthController::class, 'activate'])->name('activate');
     Route::post('verify', [AuthController::class, 'verify']);
-
-    Route::prefix('user')->group(function () {
-        Route::get('/', [UserController::class, 'index']);
-        Route::get('/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
-        Route::post('/', [UserController::class, 'store']);
-        Route::put('/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
-        Route::delete('/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
-    });
-
-    Route::prefix('item')->group(function () {
-        Route::get('/', [ItemController::class, 'index']);
-        Route::get('/{id}', [ItemController::class, 'show'])->where('id', '[0-9]+');
-        Route::post('/', [ItemController::class, 'store']);
-        Route::put('/{id}', [ItemController::class, 'update'])->where('id', '[0-9]+');
-        Route::delete('/{id}', [ItemController::class, 'destroy'])->where('id', '[0-9]+');
-    });
-
-    Route::prefix('catalogo')->group(function () {
-        Route::get('/', [CatalogoController::class, 'index']);
-        Route::get('/{id}', [CatalogoController::class, 'show'])->where('id', '[0-9]+');
-        Route::post('/', [CatalogoController::class, 'store']);
-        Route::put('/{id}', [CatalogoController::class, 'update'])->where('id', '[0-9]+');
-        Route::delete('/{id}', [CatalogoController::class, 'destroy'])->where('id', '[0-9]+');
-    });
 });
+
+Route::group([
+    'middleware' => ['api', 'auth:api'],
+    'prefix' => 'auth'
+], function ($router) {
+    Route::get('user', [UserController::class, 'index']);
+    Route::get('user/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('user', [UserController::class, 'store']);
+    Route::put('user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
+
+    Route::get('item', [ItemController::class, 'index']);
+    Route::get('item/{id}', [ItemController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('item', [ItemController::class, 'store']);
+    Route::put('item/{id}', [ItemController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('item/{id}', [ItemController::class, 'destroy'])->where('id', '[0-9]+');
+
+    Route::get('catalogo', [CatalogoController::class, 'index']);
+    Route::get('catalogo/{id}', [CatalogoController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('catalogo', [CatalogoController::class, 'store']);
+    Route::put('catalogo/{id}', [CatalogoController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('catalogo/{id}', [CatalogoController::class, 'destroy'])->where('id', '[0-9]+');
+
+    Route::get('modelo', [ModeloController::class, 'index']);
+    Route::get('modelo/{id}', [ModeloController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('modelo', [ModeloController::class, 'store']);
+    Route::put('modelo/{id}', [ModeloController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('modelo/{id}', [ModeloController::class, 'destroy'])->where('id', '[0-9]+');
+    
+});
+

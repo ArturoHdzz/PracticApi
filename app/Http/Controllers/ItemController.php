@@ -24,7 +24,7 @@ class ItemController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
-            'descripcion' => 'required',
+            'descripcion' => 'nullable',
             'stock' => 'required|integer',
             'precio' => 'required|numeric',
             'catalogo_id' => 'required|exists:catalogos,id',
@@ -42,6 +42,8 @@ class ItemController extends Controller
         $item->catalogo_id = $request->catalogo_id;
         $item->save(); 
 
+        $item->load('catalogo');
+
         return response()->json($item);
     }
 
@@ -49,7 +51,7 @@ class ItemController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
-            'descripcion' => 'required',
+            'descripcion' => 'nullable',
             'stock' => 'required|integer',
             'precio' => 'required|numeric',
             'catalogo_id' => 'required|exists:catalogos,id',
@@ -65,7 +67,10 @@ class ItemController extends Controller
         $item->stock = $request->stock;
         $item->precio = $request->precio;
         $item->catalogo_id = $request->catalogo_id;
+
         $item->save();
+
+        $item->load('catalogo');
 
         return response()->json($item);
     }
