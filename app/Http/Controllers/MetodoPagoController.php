@@ -11,13 +11,13 @@ class MetodoPagoController extends Controller
     public function index()
     {
         $metodoPagos = MetodoPago::all();
-        return response()->json($metodoPagos);
+        return response()->json(["data" => $metodoPagos]);
     }
 
     public function show($id)
     {
         $metodoPago = MetodoPago::all()->find($id);
-        return response()->json($metodoPago);
+        return response()->json(["data" => $metodoPago]);
     }
 
     public function store(Request $request)

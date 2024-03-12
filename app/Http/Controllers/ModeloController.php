@@ -12,13 +12,13 @@ class ModeloController extends Controller
     public function index()
     {
         $modelos = Modelo::with('item')->get();
-        return response()->json($modelos);
+        return response()->json(["data" => $modelos]);
     }
 
     public function show($id)
     {
         $modelo = Modelo::with('item')->find($id);
-        return response()->json($modelo);
+        return response()->json(["data" => $modelo]);
     }
 
     public function store(Request $request)

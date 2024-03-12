@@ -13,13 +13,13 @@ class DetallePedidoController extends Controller
     public function index()
     {
         $detallePedidos = DetallePedido::with( 'modelo')->get();
-        return response()->json($detallePedidos);
+        return response()->json(["data" => $detallePedidos]);
     }
 
     public function show($id)
     {
         $detallePedido = DetallePedido::with('modelo')->find($id);
-        return response()->json($detallePedido);
+        return response()->json(["data" => $detallePedido]);
     }
 
     public function store(Request $request)

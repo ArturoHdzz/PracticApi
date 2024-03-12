@@ -13,13 +13,13 @@ class DetalleCompraController extends Controller
     public function index()
     {
         $detalleCompras = DetalleCompra::with('modelo')->get();
-        return response()->json($detalleCompras);
+        return response()->json(["data" => $detalleCompras]);
     }
 
     public function show($id)
     {
         $detalleCompra = DetalleCompra::with( 'modelo')->find($id);
-        return response()->json($detalleCompra);
+        return response()->json(["data" => $detalleCompra]);
     }
 
     public function store(Request $request)

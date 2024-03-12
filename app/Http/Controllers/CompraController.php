@@ -12,13 +12,13 @@ class CompraController extends Controller
     public function index()
     {
         $compras = Compra::with('user', 'metodoPago', 'detallecompras')->get();
-        return response()->json($compras);
+        return response()->json(["data" => $compras]);
     }
 
     public function show($id)
     {
         $compra = Compra::with('user', 'metodoPago', 'detallecompras')->find($id);
-        return response()->json($compra);
+        return response()->json(["data" => $compra]);
     }
 
     public function store(Request $request)

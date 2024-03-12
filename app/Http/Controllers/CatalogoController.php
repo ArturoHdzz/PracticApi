@@ -11,7 +11,7 @@ class CatalogoController extends Controller
     
     public function index(){
         $catalogo = Catalogo::all();
-        return response()->json($catalogo);
+        return response()->json(["data" => $catalogo]);
     }
 
     public function store(Request $request){
@@ -36,7 +36,7 @@ class CatalogoController extends Controller
     public function show($id){
         $catalogo = Catalogo::find($id);
         if($catalogo){
-            return response()->json($catalogo);
+            return response()->json(["data" => $catalogo]);
         }else{
             return response()->json(["msg"=>"Catalogo not found"], 404);
         }
