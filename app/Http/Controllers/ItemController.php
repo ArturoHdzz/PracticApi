@@ -11,13 +11,13 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::with('catalogo')->get();
-        return response()->json($items);
+        return response()->json(["data" => $items]);
     }
 
     public function show($id)
     {
         $item = Item::with('catalogo')->find($id);
-        return response()->json($item);
+        return response()->json(["dara" => $item]);
     }
 
     public function store(Request $request)

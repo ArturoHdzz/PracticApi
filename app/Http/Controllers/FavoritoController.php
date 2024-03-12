@@ -12,13 +12,13 @@ class FavoritoController extends Controller
     public function index()
     {
         $favoritos = Favorito::with('modelo', 'user')->get();
-        return response()->json($favoritos);
+        return response()->json(["data" => $favoritos]);
     }
 
     public function show($id)
     {
         $favorito = Favorito::with('modelo', 'user')->find($id);
-        return response()->json($favorito);
+        return response()->json(["data" => $favorito]);
     }
 
     public function store(Request $request)

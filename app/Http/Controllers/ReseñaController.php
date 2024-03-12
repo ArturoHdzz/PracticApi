@@ -12,13 +12,13 @@ class ReseñaController extends Controller
     public function index()
     {
         $reseñas = Reseña::with('modelo', 'user')->get();
-        return response()->json($reseñas);
+        return response()->json(["data" => $reseñas]);
     }
 
     public function show($id)
     {
         $reseña = Reseña::with('modelo', 'user')->find($id);
-        return response()->json($reseña);
+        return response()->json(["data" => $reseña]);
     }
 
     public function store(Request $request)

@@ -44,9 +44,9 @@ class AuthController extends Controller
 
             Mail::to($user->email)->send(new VerificationCodeMail($code));
 
-            return response()->json(['message' => 'Login successful, please verify.']);
+            return response()->json(['message' => 'Login successful, please verify.', 'result' => true]);
         } else {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Unauthorized', 'result' => false], 401);
         }
     }
 
@@ -64,7 +64,10 @@ class AuthController extends Controller
 
             $token = auth()->login($user);
 
-            return $this->respondWithToken($token);
+            return response()->json([
+                'token' => $token,
+                'result' => true
+            ]);
         } else {
             return response()->json(['error' => 'Invalid verification code'], 401);
         }
@@ -147,7 +150,7 @@ class AuthController extends Controller
 
             Mail::to($request->email)->send(new Correo($signedroute));
 
-            return response()->json(["msg"=>"Se mando un mensaje a tu correo","data"=>$user],201);
+            return response()->json(["msg"=>"Se mando un mensaje a tu correo","data"=>$user, "result" => true],201);
     }
 
     public function activate(User $user)

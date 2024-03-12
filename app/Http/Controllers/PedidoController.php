@@ -13,13 +13,13 @@ class PedidoController extends Controller
     public function index()
     {
         $pedidos = Pedido::with('user', 'metodoPago')->get();
-        return response()->json($pedidos);
+        return response()->json(["data" => $pedidos]);
     }
 
     public function show($id)
     {
         $pedido = Pedido::with('user', 'metodoPago')->find($id);
-        return response()->json($pedido);
+        return response()->json(["data" => $pedido]);
     }
 
     public function store(Request $request)
