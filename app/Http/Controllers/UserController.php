@@ -16,6 +16,12 @@ class UserController extends Controller
         return response()->json(["data" => $users]);
     }
 
+    public function roles()
+    {
+        $roles = Rol::all();
+        return response()->json(["data" => $roles]);
+    }
+
     public function show($id)
     {
         $user = User::with('role')->find($id);

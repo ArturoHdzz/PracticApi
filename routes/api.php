@@ -35,6 +35,7 @@ Route::group([
     //SOLO ADMIN
     Route::group(['middleware' => 'only.admin'], function ($router) {
         Route::get('user', [UserController::class, 'index']);
+        Route::get('user/roles', [UserController::class, 'roles']);
         Route::get('user/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
         Route::post('user', [UserController::class, 'store']);
         Route::put('user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
