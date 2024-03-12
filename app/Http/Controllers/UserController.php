@@ -13,13 +13,13 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('role')->get();
-        return response()->json($users);
+        return response()->json(["data" => $users]);
     }
 
     public function show($id)
     {
         $user = User::with('role')->find($id);
-        return response()->json($user);
+        return response()->json(["data" => $user]);
     }
 
     public function store(Request $request)
@@ -52,9 +52,8 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'required|min:6',
-            'role_id' => 'required|exists:roles,id',
-            'is_active' => 'nullable|boolean'
+            'password' => 'nullable|min:8',
+            'role_id' => 'required|exists:roles,id'
         ]);
 
         if ($validator->fails()) {
@@ -64,9 +63,12 @@ class UserController extends Controller
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
         $user->role_id = $request->role_id;
-        $user->is_active = $request->is_active;
         $user->save();
 
         $user->load('role');
