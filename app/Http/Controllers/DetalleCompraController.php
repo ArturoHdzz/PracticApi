@@ -28,6 +28,7 @@ class DetalleCompraController extends Controller
             'cantidad' => 'required|integer',
             'precio' => 'required|numeric',
             'modelo_id' => 'required|exists:modelos,id',
+            'compra_id' => 'nullable|exists:compras,id',
         ]);
 
         if ($validator->fails()) {
@@ -38,9 +39,10 @@ class DetalleCompraController extends Controller
         $detalleCompra->cantidad = $request->cantidad;
         $detalleCompra->precio = $request->precio;
         $detalleCompra->modelo_id = $request->modelo_id;
+        $detalleCompra->compra_id = $request->compra_id;
         $detalleCompra->save(); 
 
-        $detalleCompra->load('modelo');
+        $detalleCompra->load('compra','modelo');
 
         return response()->json($detalleCompra);
     }

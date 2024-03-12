@@ -28,6 +28,7 @@ class DetallePedidoController extends Controller
             'cantidad' => 'required|numeric',
             'precio' => 'required|numeric',
             'modelo_id' => 'required|exists:modelos,id',
+            'pedido_id' => 'required|exists:pedidos,id',
         ]);
 
         if ($validator->fails()) {
@@ -37,6 +38,7 @@ class DetallePedidoController extends Controller
         $detallePedido->cantidad = $request->cantidad;
         $detallePedido->precio = $request->precio;
         $detallePedido->modelo_id = $request->modelo_id;
+        $detallePedido->pedido_id = $request->pedido_id;
         $detallePedido->save(); 
 
         $detallePedido->load('pedido', 'modelo');
@@ -50,6 +52,7 @@ class DetallePedidoController extends Controller
             'cantidad' => 'required|numeric',
             'precio' => 'required|numeric',
             'modelo_id' => 'required|exists:modelos,id',
+            'pedido_id' => 'required|exists:pedidos,id',
         ]);
 
         if ($validator->fails()) {
@@ -59,6 +62,7 @@ class DetallePedidoController extends Controller
         $detallePedido->cantidad = $request->cantidad;
         $detallePedido->precio = $request->precio;
         $detallePedido->modelo_id = $request->modelo_id;
+        $detallePedido->pedido_id = $request->pedido_id;
         $detallePedido->save(); 
 
         $detallePedido->load('pedido', 'modelo');
