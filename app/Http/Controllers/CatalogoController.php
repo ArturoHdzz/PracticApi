@@ -45,6 +45,7 @@ class CatalogoController extends Controller
     public function update(Request $request, $id){
         $catalogo = Catalogo::find($id);
         if($catalogo){
+            //return response()->json(["msg"=>$request->nombre, "data" => $request->descripcion], 200);
             $catalogo->nombre = $request->nombre;
             $catalogo->descripcion = $request->descripcion;
             $catalogo->save();
