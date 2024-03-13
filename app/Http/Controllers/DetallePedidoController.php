@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DetallePedido;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Item;
 
 
 class DetallePedidoController extends Controller
@@ -34,6 +35,15 @@ class DetallePedidoController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+
+        $item = Item::find($request->modelo_id);
+
+        if ($request->cantidad > $item->stock) {
+            return response()->json(['error' => 'No hay suficiente stock'], 400);
+        }
+
+        $item->stock -= $request->cantidad;
+        $item->save();
         $detallePedido = new DetallePedido;
         $detallePedido->cantidad = $request->cantidad;
         $detallePedido->precio = $request->precio;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DetalleCompra;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Item;
 
 class DetalleCompraController extends Controller
 {
@@ -35,12 +36,21 @@ class DetalleCompraController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
+        $item = Item::find($request->modelo_id);
+
+        if ($request->cantidad > $item->stock) {
+            return response()->json(['error' => 'No hay suficiente stock'], 400);
+        }
+
+        $item->stock -= $request->cantidad;
+        $item->save();
+
         $detalleCompra = new DetalleCompra;
         $detalleCompra->cantidad = $request->cantidad;
         $detalleCompra->precio = $request->precio;
         $detalleCompra->modelo_id = $request->modelo_id;
         $detalleCompra->compra_id = $request->compra_id;
-        $detalleCompra->save(); 
+        $detalleCompra->save();
 
         $detalleCompra->load('compra','modelo');
 
