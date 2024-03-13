@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Mail\Correo;
 use App\Models\User;
 use App\Mail\VerificationCodeMail;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
@@ -157,5 +158,15 @@ class AuthController extends Controller
     {
         $user->is_active=true;
         $user->save();
+    }
+
+    public function verifytoken(){
+        try{
+            return response()->json(['msg'=>"Auth"],200);
+        }
+        catch(Exception $e){
+            return response()->json(['msg'=>"Unahutorized"],401);
+        }
+
     }
 }
