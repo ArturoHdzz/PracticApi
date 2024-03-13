@@ -9,8 +9,6 @@ use App\Models\Item;
 
 class DetalleCompraController extends Controller
 {
-    
-
     public function index()
     {
         $detalleCompras = DetalleCompra::with('modelo', 'compra')->get();
@@ -75,7 +73,7 @@ class DetalleCompraController extends Controller
         if ($request->cantidad > $item->stock) {
             return response()->json(['error' => 'No hay suficiente stock'], 400);
         }
-        
+
         $detalleCompra = DetalleCompra::find($id);
         $detalleCompra->cantidad = $request->cantidad;
         $detalleCompra->precio = $request->precio;
