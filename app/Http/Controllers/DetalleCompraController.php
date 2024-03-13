@@ -70,6 +70,12 @@ class DetalleCompraController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
+        $item = Item::find($request->modelo_id);
+
+        if ($request->cantidad > $item->stock) {
+            return response()->json(['error' => 'No hay suficiente stock'], 400);
+        }
+        
         $detalleCompra = DetalleCompra::find($id);
         $detalleCompra->cantidad = $request->cantidad;
         $detalleCompra->precio = $request->precio;
