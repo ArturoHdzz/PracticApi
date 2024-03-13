@@ -26,6 +26,7 @@ class FavoritoController extends Controller
         $validator = Validator::make($request->all(), [
             'modelo_id' => 'required|exists:modelos,id',
             'user_id' => 'required|exists:users,id',
+            'fecha' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -35,6 +36,7 @@ class FavoritoController extends Controller
         $favorito = new Favorito;
         $favorito->modelo_id = $request->modelo_id;
         $favorito->user_id = $request->user_id;
+        $favorito->fecha = $request->fecha;
         $favorito->save(); 
 
         $favorito->load('modelo', 'user');
@@ -47,6 +49,7 @@ class FavoritoController extends Controller
         $validator = Validator::make($request->all(), [
             'modelo_id' => 'required|exists:modelos,id',
             'user_id' => 'required|exists:users,id',
+            'fecha' => 'required|date'
         ]);
 
         if ($validator->fails()) {
@@ -55,6 +58,7 @@ class FavoritoController extends Controller
         $favorito = Favorito::find($id);
         $favorito->modelo_id = $request->modelo_id;
         $favorito->user_id = $request->user_id;
+        $favorito->fecha = $request->fecha;
         $favorito->save(); 
 
         $favorito->load('modelo', 'user');
