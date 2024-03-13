@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Compra;
+use App\Models\User;
+use App\Models\MetodoPago;
 use Illuminate\Support\Facades\Validator;
 
 class CompraController extends Controller
@@ -11,16 +13,25 @@ class CompraController extends Controller
   
     public function index()
     {
-        $compras = Compra::with('user', 'metodoPago', 'detallecompras')->get();
+        $compras = Compra::with('user', 'metodoPago')->get();
         return response()->json(["data" => $compras]);
     }
 
     public function show($id)
     {
-        $compra = Compra::with('user', 'metodoPago', 'detallecompras')->find($id);
+        $compra = Compra::with('user', 'metodoPago')->find($id);
         return response()->json(["data" => $compra]);
     }
 
+    public function showuser(){
+        $user = User::All();
+        return response()->json(["data" => $user]);
+    }
+
+    public function showmetodopago(){
+        $metodopago = MetodoPago::All();
+        return response()->json(["data" => $metodopago]);
+    }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

@@ -54,7 +54,9 @@ Route::group([
         Route::post('metodopago', [MetodoPagoController::class, 'store']);
         Route::put('metodopago/{id}', [MetodoPagoController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('metodopago/{id}', [MetodoPagoController::class, 'destroy'])->where('id', '[0-9]+');
-        
+       
+        Route::get('compra/user', [CompraController::class, 'showuser']);
+        Route::get('compra/metodopago', [CompraController::class, 'showmetodopago']);
         Route::post('compra', [CompraController::class, 'store']);
         Route::put('compra/{id}', [CompraController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('compra/{id}', [CompraController::class, 'destroy'])->where('id', '[0-9]+');
