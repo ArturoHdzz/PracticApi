@@ -160,12 +160,17 @@ class AuthController extends Controller
         $user->save();
     }
 
-    public function verifytoken(){
+    public function verifytoken(Request $request){
         try{
-            return response()->json(['msg'=>"Auth"],200);
+            $user = auth()->user();
+            if ($user) {
+                return response()->json(['msg'=>"Auth"],200);
+            } else {
+                return response()->json(['msg'=>"Unauthorized"],401);
+            }
         }
         catch(Exception $e){
-            return response()->json(['msg'=>"Unahutorized"],401);
+            return response()->json(['msg'=>"Unauthorized"],401);
         }
     }
 
