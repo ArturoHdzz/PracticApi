@@ -28,6 +28,7 @@ Route::group([
     Route::post('verify', [AuthController::class, 'verify']);
     Route::get('verifytoken', [AuthController::class, 'verifytoken']);
     Route::get('roluser', [AuthController::class, 'roluser']);
+    Route::post('usergest', [UserController::class, 'createGuestToken']);
 
 });
 

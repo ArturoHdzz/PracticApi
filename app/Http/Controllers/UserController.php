@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Rol;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -88,5 +90,19 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json('User deleted successfully');
+    }
+
+    public function createGuestToken()
+    {
+        $guestUser = new User;
+        $guestUser->name = 'Guest_' . Str::random(6);
+        $guestUser->email = Str::random(10) . '@gmail.com';
+        $guestUser->password = Hash::make(Str::random(12));
+        $guestUser->role_id = 3;
+        $guestUser->save();
+
+        $token = auth()->login($guestUser);
+
+        return response()->json(['token' => $token]);
     }
 }
