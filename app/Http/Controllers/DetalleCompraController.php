@@ -24,8 +24,8 @@ class DetalleCompraController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'cantidad' => 'required|integer',
-            'precio' => 'required|numeric',
+            'cantidad' => 'required|integer|min:1',
+            'precio' => 'required|numeric|min:0',
             'modelo_id' => 'required|exists:modelos,id',
             'compra_id' => 'nullable|exists:compras,id',
         ]);
@@ -58,10 +58,10 @@ class DetalleCompraController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'cantidad' => 'required|integer',
-            'precio' => 'required|numeric',
+            'cantidad' => 'required|integer|min:1',
+            'precio' => 'required|numeric|min:0',
             'modelo_id' => 'required|exists:modelos,id',
-            'compra_id' => 'nullable|exists:compras,id'
+            'compra_id' => 'nullable|exists:compras,id',
         ]);
 
         if ($validator->fails()) {
