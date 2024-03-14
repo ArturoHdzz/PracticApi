@@ -39,7 +39,7 @@ class DetallePedidoController extends Controller
         $item = Item::find($request->modelo_id);
 
         if ($request->cantidad > $item->stock) {
-            return response()->json(['error' => 'No hay suficiente stock'], 400);
+            return response()->json(['stock' => 'No hay suficiente stock'], 400);
         }
 
         $item->stock -= $request->cantidad;
@@ -72,7 +72,7 @@ class DetallePedidoController extends Controller
         $item = Item::find($request->modelo_id);
 
         if ($request->cantidad > $item->stock) {
-            return response()->json(['error' => 'No hay suficiente stock'], 400);
+            return response()->json(['stock' => 'No hay suficiente stock'], 400);
         }
 
         $detallePedido = DetallePedido::find($id);

@@ -35,7 +35,7 @@ class CompraController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'fecha' => 'required|date',
+            'fecha' => 'required|date_format:Y-m-d',
             'total' => 'required|numeric',
             'metodo_pago_id' => 'required|exists:metodo_pagos,id',
             'user_id' => 'required|exists:users,id',
@@ -60,7 +60,7 @@ class CompraController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'fecha' => 'required|date',
+            'fecha' => 'required|date_format:Y-m-d',
             'total' => 'required|numeric',
             'metodo_pago_id' => 'required|exists:metodo_pagos,id',
             'user_id' => 'required|exists:users,id',

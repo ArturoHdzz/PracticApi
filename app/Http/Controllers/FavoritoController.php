@@ -26,7 +26,7 @@ class FavoritoController extends Controller
         $validator = Validator::make($request->all(), [
             'modelo_id' => 'required|exists:modelos,id',
             'user_id' => 'required|exists:users,id',
-            'fecha' => 'required'
+            'fecha' => 'required|date_format:Y-m-d',
         ]);
 
         if ($validator->fails()) {
@@ -49,7 +49,7 @@ class FavoritoController extends Controller
         $validator = Validator::make($request->all(), [
             'modelo_id' => 'required|exists:modelos,id',
             'user_id' => 'required|exists:users,id',
-            'fecha' => 'required|date'
+            'fecha' => 'required|date_format:Y-m-d',
         ]);
 
         if ($validator->fails()) {
