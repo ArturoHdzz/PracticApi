@@ -48,6 +48,8 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->role_id = $request->role_id;
+        $user->is_active = true;
+
         $user->save();
 
         $user->load('role');
@@ -99,6 +101,7 @@ class UserController extends Controller
         $guestUser->email = Str::random(10) . '@gmail.com';
         $guestUser->password = Hash::make(Str::random(12));
         $guestUser->role_id = 3;
+        $guestUser->is_active = 1;
         $guestUser->save();
 
         $token = auth()->login($guestUser);
