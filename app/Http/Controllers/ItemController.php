@@ -25,8 +25,8 @@ class ItemController extends Controller
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
             'descripcion' => 'nullable',
-            'stock' => 'required|integer',
-            'precio' => 'required|numeric',
+            'stock' => 'required|integer|min:1',
+            'precio' => 'required|numeric|min:1',
             'catalogo_id' => 'required|exists:catalogos,id',
         ]);
 
@@ -52,8 +52,8 @@ class ItemController extends Controller
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
             'descripcion' => 'nullable',
-            'stock' => 'required|integer',
-            'precio' => 'required|numeric',
+            'stock' => 'required|integer|min:1',
+            'precio' => 'required|numeric|min:1',
             'catalogo_id' => 'required|exists:catalogos,id',
         ]);
 

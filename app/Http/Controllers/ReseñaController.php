@@ -26,7 +26,7 @@ class ReseñaController extends Controller
         $validator = Validator::make($request->all(), [
             'comentario' => 'required|string',
             'calificacion' => 'required|numeric',
-            'fecha' => 'required|date',
+            'fecha' => 'required|date_format:Y-m-d',
             'modelo_id' => 'required|exists:modelos,id',
             'user_id' => 'required|exists:users,id',
         ]);
@@ -53,7 +53,7 @@ class ReseñaController extends Controller
         $validator = Validator::make($request->all(), [
             'comentario' => 'required|string',
             'calificacion' => 'required|numeric',
-            'fecha' => 'required|date',
+            'fecha' => 'required|date_format:Y-m-d',
             'modelo_id' => 'required|exists:modelos,id',
             'user_id' => 'required|exists:users,id',
         ]);
