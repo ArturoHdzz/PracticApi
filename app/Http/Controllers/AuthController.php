@@ -167,6 +167,11 @@ class AuthController extends Controller
         catch(Exception $e){
             return response()->json(['msg'=>"Unahutorized"],401);
         }
+    }
 
+    public function roluser()
+    {
+        $rol = User::with('role')->find(auth()->user()->id);
+        return response()->json(["role_id" => $rol->role_id]);
     }
 }

@@ -27,6 +27,8 @@ Route::group([
     Route::get('activate/{user}', [AuthController::class, 'activate'])->name('activate');
     Route::post('verify', [AuthController::class, 'verify']);
     Route::get('verifytoken', [AuthController::class, 'verifytoken']);
+    Route::get('roluser', [AuthController::class, 'roluser']);
+
 });
 
 Route::group([
