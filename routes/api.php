@@ -14,11 +14,13 @@ use App\Http\Controllers\ReseñaController;
 use App\Http\Controllers\FavoritoController;
 use App\Http\Controllers\DetallePedidoController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\LogController;
 
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
+
     Route::post('login', [AuthController::class, 'login'])->middleware('checkUserIsActive');
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
@@ -29,6 +31,9 @@ Route::group([
     Route::get('verifytoken', [AuthController::class, 'verifytoken']);
     Route::get('roluser', [AuthController::class, 'roluser']);
     Route::post('usergest', [UserController::class, 'createGuestToken']);
+
+    Route::get('mongo', [LogController::class, 'show']);
+    Route::get('mongo2', [LogController::class, 'store']);
 
 });
 
