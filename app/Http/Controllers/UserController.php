@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Rol;
+use App\Models\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,6 +90,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
+
+        Log::where('user_id', $user->id)->delete();
+
         $user->delete();
 
         return response()->json('User deleted successfully');
