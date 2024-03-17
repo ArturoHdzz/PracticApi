@@ -12,7 +12,7 @@ class Log extends Model
     protected $collection = 'logs_collection';
     protected $connection = 'mongodb';
 
-    protected $fillable = ['route', 'method', 'values', 'user_id'];
+    protected $fillable = ['route', 'method', 'values', 'user_id', 'created_at', 'updated_at'];
 
     public function user()
     {
