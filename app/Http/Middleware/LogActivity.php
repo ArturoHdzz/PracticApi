@@ -20,12 +20,26 @@ class LogActivity
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
+
         $log = new Log;
         $log->route = $request->path();
         $log->method = $request->method();
-        $log->values = json_encode($request->all());
+
+        if ($request->method() === 'DELETE') {
+            $id = last(explode('/', $request->path()));
+            $log->values = json_encode(['id' => $id]);
+        } 
+        else if ($request->method() === 'PUT') {
+            $id = last(explode('/', $request->path()));
+            $log->values = json_encode(['id' => $id, 'request_all' => $request->all()]);
+        } 
+        else {
+            $log->values = json_encode($request->all());
+        }
+        
         $log->user_id = Auth::user()->id;
         $log->save();
+
         return $response;
     }
 }
