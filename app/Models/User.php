@@ -13,6 +13,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $connection = 'mysql';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -76,5 +78,10 @@ class User extends Authenticatable implements JWTSubject
     public function compras()
     {
         return $this->HasMany(Compra::class);
+    }
+
+    public function logs()
+    {
+        return $this->HasMany(Log::class);
     }
 }

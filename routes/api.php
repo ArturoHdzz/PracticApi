@@ -32,13 +32,10 @@ Route::group([
     Route::get('roluser', [AuthController::class, 'roluser']);
     Route::post('usergest', [UserController::class, 'createGuestToken']);
 
-    Route::get('mongo', [LogController::class, 'show']);
-    Route::get('mongo2', [LogController::class, 'store']);
-
 });
 
 Route::group([
-    'middleware' => ['api', 'auth:api'],
+    'middleware' => ['api', 'auth:api', 'log.activity'],
     'prefix' => 'auth'
 ], function ($router) {
     //SOLO ADMIN
@@ -49,6 +46,8 @@ Route::group([
         Route::post('user', [UserController::class, 'store']);
         Route::put('user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
+        Route::get('/logs', [LogController::class, 'index']);
+
 
         Route::post('item', [ItemController::class, 'store']);
         Route::put('item/{id}', [ItemController::class, 'update'])->where('id', '[0-9]+');
@@ -131,5 +130,6 @@ Route::group([
     Route::group(['middleware' => 'admin.user'], function ($router) {
         Route::post('catalogo', [CatalogoController::class, 'store']);
         Route::put('catalogo/{id}', [CatalogoController::class, 'update'])->where('id', '[0-9]+');
+        
     });
 });

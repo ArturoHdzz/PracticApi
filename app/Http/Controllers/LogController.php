@@ -9,32 +9,12 @@ use Illuminate\Support\Facades\DB;
 class LogController extends Controller
 {
 
-    public function __construct()
+    public function index()
     {
-        $this->middleware('auth:api', ['except' => ['show', 'store']]);
+        $logs = Log::with('user')->get();
+
+        return response()->json($logs);
     }
 
-    public function show()
-    {
-        try {
-            // DB::connection('mongodb')->getPdo();
-            // return "Conexion Exitosa con MongoDB";
-
-            $logs = Log::all();
-            return response()->json($logs);
-
-        } catch (\Exception $e) {
-            return "Error al conectar a la base de datos: " . $e->getMessage();
-        }
-    }
-
-    public function store(Request $request)
-    {
-        $log = new Log();
-        $log->title = $request->name; 
-        $log->save();
- 
-        return response()->json(["result" => "ok"], 201);
-    }
     
 }

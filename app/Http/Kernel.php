@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'admin.guest' => \App\Http\Middleware\AdminGuestMiddleware::class,
         'admin.user.guest' => \App\Http\Middleware\AdminUserGuestMiddleware::class,
         'admin.user' => \App\Http\Middleware\AdminUserMiddleware::class,
+        'log.activity' => \App\Http\Middleware\LogActivity::class,
     ];
 }

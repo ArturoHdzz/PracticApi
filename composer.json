@@ -10,7 +10,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "mongodb/laravel-mongodb": "^3.8",
+        "mongodb/laravel-mongodb": "^3.9",
         "php-open-source-saver/jwt-auth": "^2.1",
         "symfony/http-client": "^6.0",
         "symfony/mailgun-mailer": "^6.0",
