@@ -157,6 +157,7 @@ class AuthController extends Controller
     public function activate(User $user)
     {
         $user->is_active=true;
+        $user->role_id=2;
         $user->save();
     }
 
