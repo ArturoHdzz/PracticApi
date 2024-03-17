@@ -13,7 +13,7 @@ class LogController extends Controller
     {
         $logs = Log::with('user')->get();
 
-        return response()->json($logs);
+        return response()->json(["data" => $logs]);
     }
 
     
