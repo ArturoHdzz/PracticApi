@@ -98,7 +98,7 @@ class UserController extends Controller
         return response()->json('User deleted successfully');
     }
 
-    public function createGuestToken()
+    public function createGuestToken(Request $request)
     {
         $guestUser = new User;
         $guestUser->name = 'Guest_' . Str::random(6);
@@ -107,6 +107,13 @@ class UserController extends Controller
         $guestUser->role_id = 3;
         $guestUser->is_active = 1;
         $guestUser->save();
+
+        $log = new Log;
+        $log->route = $request->path();
+        $log->method = $request->method();
+        $log->values = request('email');
+        $log->user_id = $guestUser->id;
+        $log->save();
 
         $token = auth()->login($guestUser);
 
