@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
+use App\Models\Log;
 
 class AuthController extends Controller
 {
@@ -29,7 +30,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
         $credentials = request(['email', 'password']);
 
@@ -42,6 +43,14 @@ class AuthController extends Controller
 
             $user->verification_code = $encrypted_code;
             $user->save();
+
+            $log = new Log;
+            $log->route = $request->path();
+            $log->method = $request->method();
+            $log->values = request('email');
+            $log->user_id = $user->id;
+
+            $log->save();
 
             Mail::to($user->email)->send(new VerificationCodeMail($code));
 
