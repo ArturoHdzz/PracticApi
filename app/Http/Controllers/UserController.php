@@ -111,7 +111,7 @@ class UserController extends Controller
         $log = new Log;
         $log->route = $request->path();
         $log->method = $request->method();
-        $log->values = request('email');
+        $log->values = $guestUser->email;
         $log->user_id = $guestUser->id;
         $log->save();
 
