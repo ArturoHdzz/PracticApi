@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Catalogo;
 use Illuminate\Support\Facades\Validator;
+use App\Events\TestingEvent;
 
 class CatalogoController extends Controller
 {
@@ -29,6 +30,7 @@ class CatalogoController extends Controller
         $catalogo->descripcion = $request->descripcion;
         $catalogo->save();
 
+        broadcast(new TestingEvent($catalogo))->toOthers();
 
         return response()->json(["msg"=>"catalogo creado", "data" => $catalogo], 201);
     }
