@@ -19,4 +19,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('item', [ItemController::class, 'index']);

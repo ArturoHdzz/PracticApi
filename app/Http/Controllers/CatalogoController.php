@@ -15,17 +15,7 @@ class CatalogoController extends Controller
     {
         $catalogo = Catalogo::all();
 
-        $response = new StreamedResponse(function () use ($catalogo) {
-            echo "data: " . json_encode($catalogo) . "\n\n";
-            ob_flush();
-            flush();
-        });
-
-        $response->headers->set('Content-Type', 'text/event-stream');
-        $response->headers->set('Cache-Control', 'no-cache');
-        $response->headers->set('Connection', 'keep-alive');
-
-        return $response;
+        return response()->json(["data" => $catalogo]);
     }
 
     public function store(Request $request){
@@ -42,8 +32,6 @@ class CatalogoController extends Controller
         $catalogo->nombre = $request->nombre;
         $catalogo->descripcion = $request->descripcion;
         $catalogo->save();
-
-        broadcast(new TestingEvent($catalogo))->toOthers();
 
         return response()->json(["msg"=>"catalogo creado", "data" => $catalogo], 201);
     }
