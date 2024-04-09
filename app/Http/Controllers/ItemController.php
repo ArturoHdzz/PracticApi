@@ -11,6 +11,7 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::with('catalogo')->get();
+        
         return response()->json(["data" => $items]);
     }
 

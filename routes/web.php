@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ItemController;
 //use App\Http\Controllers\TeEventController;
 
 /*
@@ -18,4 +19,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('test', [TeEventController::class, 'testingevent']);
+Route::get('item', [ItemController::class, 'index']);
