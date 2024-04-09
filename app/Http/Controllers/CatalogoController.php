@@ -6,13 +6,26 @@ use Illuminate\Http\Request;
 use App\Models\Catalogo;
 use Illuminate\Support\Facades\Validator;
 use App\Events\TestingEvent;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CatalogoController extends Controller
 {
     
-    public function index(){
+    public function index(Request $request)
+    {
         $catalogo = Catalogo::all();
-        return response()->json(["data" => $catalogo]);
+
+        $response = new StreamedResponse(function () use ($catalogo) {
+            echo "data: " . json_encode($catalogo) . "\n\n";
+            ob_flush();
+            flush();
+        });
+
+        $response->headers->set('Content-Type', 'text/event-stream');
+        $response->headers->set('Cache-Control', 'no-cache');
+        $response->headers->set('Connection', 'keep-alive');
+
+        return $response;
     }
 
     public function store(Request $request){
