@@ -35,4 +35,15 @@ class ItemCreated implements ShouldBroadcast
     {
         return new Channel('items');
     }
+    public function broadcastAs()
+    {
+        return 'item.created';
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            'item' => $this->item->load('catalogo')->toArray()
+        ];
+    }
 }
