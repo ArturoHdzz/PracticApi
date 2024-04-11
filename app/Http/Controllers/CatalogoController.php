@@ -7,6 +7,7 @@ use App\Models\Catalogo;
 use Illuminate\Support\Facades\Validator;
 use App\Events\TestingEvent;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\Cache;
 
 class CatalogoController extends Controller
 {
@@ -16,6 +17,25 @@ class CatalogoController extends Controller
         $catalogo = Catalogo::all();
 
         return response()->json(["data" => $catalogo]);
+    }
+
+    public function SSE(Request $request)
+    {    
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
+        header('Connection: keep-alive');
+        header('X-Accel-Buffering: no');
+        header('Access-Control-Allow-Origin:*');
+
+        if (Cache::has('SSEE')) {
+            echo "data: " . json_encode(true) . "\n\n";
+            ob_flush();
+            flush();
+        } else {
+            echo "" . "\n\n";
+            ob_flush();
+            flush();
+        }
     }
 
     public function store(Request $request){
@@ -32,6 +52,8 @@ class CatalogoController extends Controller
         $catalogo->nombre = $request->nombre;
         $catalogo->descripcion = $request->descripcion;
         $catalogo->save();
+
+        Cache::put('SSEE', 'created', 5);
 
         return response()->json(["msg"=>"catalogo creado", "data" => $catalogo], 201);
     }
@@ -52,6 +74,9 @@ class CatalogoController extends Controller
             $catalogo->nombre = $request->nombre;
             $catalogo->descripcion = $request->descripcion;
             $catalogo->save();
+
+            Cache::put('SSEE', 'updated', 5);
+
             return response()->json(["msg"=>"catalogo creado", "data" => $catalogo], 200);
         }else{
             return response()->json(["msg"=>"Catalogo not found"], 404);
@@ -62,6 +87,9 @@ class CatalogoController extends Controller
         $catalogo = Catalogo::find($id);
         if($catalogo){
             $catalogo->delete();
+
+            Cache::put('SSEE', 'deleted', 5);
+            
             return response()->json(["msg"=>"Catalogo deleted"], 200);
         }else{
             return response()->json(["msg"=>"Catalogo not found"], 404);

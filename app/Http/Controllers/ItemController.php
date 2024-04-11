@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use Illuminate\Support\Facades\Validator;
 use App\Events\ItemCreated;
-use App\Events\ItemUpdated;
-use App\Events\ItemDeleted;
+
 
 class ItemController extends Controller
 {
     public function index()
     {
         $items = Item::with('catalogo')->get();
+        event(new ItemCreated($items));
         return response()->json(["data" => $items]);
     }
 
@@ -45,7 +45,7 @@ class ItemController extends Controller
         $item->catalogo_id = $request->catalogo_id;
         $item->save();
 
-        event(new ItemCreated($item));
+        
 
         $item->load('catalogo');
 
@@ -74,7 +74,7 @@ class ItemController extends Controller
         $item->catalogo_id = $request->catalogo_id;
 
         $item->save();
-        event(new ItemUpdated($item));
+
         $item->load('catalogo');
 
         return response()->json($item);
@@ -83,7 +83,6 @@ class ItemController extends Controller
     public function destroy($id)
     {
         $item = Item::find($id);
-        event(new ItemDeleted($item));
         $item->delete();
         return response()->json('Item deleted successfully');
     }
