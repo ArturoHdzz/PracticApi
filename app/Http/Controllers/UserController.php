@@ -99,6 +99,18 @@ class UserController extends Controller
         return response()->json('User deleted successfully');
     }
 
+    public function enable($id)
+    {
+        $user = User::find($id);
+
+       // Log::where('user_id', $user->id)->delete();
+
+        $user->is_active = 1;
+        $user->save();
+
+        return response()->json('User enable successfully');
+    }
+
     public function createGuestToken(Request $request)
     {
         $guestUser = new User;

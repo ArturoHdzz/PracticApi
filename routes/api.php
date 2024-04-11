@@ -48,6 +48,7 @@ Route::group([
         Route::post('user', [UserController::class, 'store']);
         Route::put('user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
+        Route::put('user/enable/{id}', [UserController::class, 'enable'])->where('id', '[0-9]+');
         Route::get('/logs', [LogController::class, 'index']);
 
         Route::post('item', [ItemController::class, 'store']);
