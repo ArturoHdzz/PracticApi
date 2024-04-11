@@ -3,11 +3,11 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 
-class CheckUserIsActive
+class IfUserIsNotActive
 {
     /**
      * Handle an incoming request.
@@ -18,9 +18,8 @@ class CheckUserIsActive
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = User::where('email', $request->email)
-        ->where('is_active', true)
-        ->first();
+        $id = Auth()->user()->id;
+        $user = User::find($id);
     
     if ($user && $user->is_active == 1) {
         return $next($request);

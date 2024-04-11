@@ -93,7 +93,8 @@ class UserController extends Controller
 
         Log::where('user_id', $user->id)->delete();
 
-        $user->delete();
+        $user->is_active = 0;
+        $user->save();
 
         return response()->json('User deleted successfully');
     }
@@ -118,5 +119,9 @@ class UserController extends Controller
         $token = auth()->login($guestUser);
 
         return response()->json(['token' => $token]);
+    }
+
+    public function isactive(){
+        return true;
     }
 }

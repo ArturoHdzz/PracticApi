@@ -21,7 +21,7 @@ Route::group([
     'prefix' => 'auth'
 ], function ($router) {
 
-    Route::post('login', [AuthController::class, 'login'])->middleware('checkUserIsActive');
+    Route::post('login', [AuthController::class, 'login'])->middleware('checkUserIsActive')->name('login');
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
@@ -35,7 +35,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['api', 'auth:api', 'log.activity'],
+    'middleware' => ['api', 'auth:api', 'log.activity', 'pikachu'],
     'prefix' => 'auth'
 ], function ($router) {
     //SOLO ADMIN
@@ -47,7 +47,6 @@ Route::group([
         Route::put('user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
         Route::get('/logs', [LogController::class, 'index']);
-
 
         Route::post('item', [ItemController::class, 'store']);
         Route::put('item/{id}', [ItemController::class, 'update'])->where('id', '[0-9]+');
@@ -124,6 +123,7 @@ Route::group([
     Route::group(['middleware' => 'admin.user.guest'], function ($router) {
         Route::get('catalogo', [CatalogoController::class, 'index']);
         Route::get('catalogo/{id}', [CatalogoController::class, 'show'])->where('id', '[0-9]+');
+        Route::get('isactive', [UserController::class, 'isactive']);
     });
 
     //ADMIN, Y USUARIO

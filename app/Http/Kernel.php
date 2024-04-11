@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'admin.user.guest' => \App\Http\Middleware\AdminUserGuestMiddleware::class,
         'admin.user' => \App\Http\Middleware\AdminUserMiddleware::class,
         'log.activity' => \App\Http\Middleware\LogActivity::class,
+        'pikachu' => \App\Http\Middleware\IfUserIsNotActive::class,
     ];
 }
