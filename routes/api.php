@@ -34,6 +34,8 @@ Route::group([
 
 });
 
+Route::get('sse', [CatalogoController::class, 'SSE']);
+
 Route::group([
     'middleware' => ['api', 'auth:api', 'log.activity'],
     'prefix' => 'auth'
